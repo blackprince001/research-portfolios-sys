@@ -24,7 +24,7 @@ def create_new_profile(
 
 
 @router.get("/profiles/{user_id}", response_model=ProfileRead)
-def read_profile(current_user: AuthenticatedUser, user_id: int, db: Database):
+def read_profile(user_id: int, db: Database):
     db_profile = get_profile_by_user_id(db, user_id)
     if db_profile is None:
         raise HTTPException(status_code=404, detail="Profile not found")

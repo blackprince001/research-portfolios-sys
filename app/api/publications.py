@@ -18,7 +18,7 @@ def create_publication(
 
 
 @router.get("/user/{user_id}", response_model=list[PublicationResponse])
-def get_user_publications(user_id: int, db: Database, current_user: AuthenticatedUser):
+def get_user_publications(user_id: int, db: Database):
     return crud.get_user_publications(db, user_id)
 
 

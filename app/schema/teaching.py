@@ -29,6 +29,7 @@ class TeachingBase(BaseModel):
 class TeachingCreate(TeachingBase):
     model_config = ConfigDict(from_attributes=True)
     user_id: int
+    courses: list[CourseBase]
 
 
 class TeachingResponse(TeachingBase):
