@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import profiles, users
+from app.api import profiles, users, teaching, publications
 from app.database.core import Base, engine
 
 
@@ -27,6 +27,8 @@ app.add_middleware(
 
 app.include_router(users.router)
 app.include_router(profiles.router)
+app.include_router(teaching.router)
+app.include_router(publications.router)
 
 
 @app.get("/ping")

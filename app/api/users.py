@@ -1,10 +1,22 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Form, Depends, status
 
-from app.crud.users import create_user, delete_user, get_user, get_users, update_user
+from app.crud.users import (
+    create_user,
+    delete_user,
+    get_user,
+    get_users,
+    update_user,
+    get_user_by_username,
+)
 from app.dependencies.database import Database
+from app.dependencies.jwt import create_token
 from app.schema.users import UserCreate, UserResponse, UserUpdate
 
-router = APIRouter()
+from app.security import get_hash, password_matches_hashed
+
+from datetime import timedelta
+
+router = APIRouter(tags=["users"])
 
 
 @router.post("/users/", response_model=UserResponse)
@@ -51,3 +63,39 @@ def delete_user_route(user_id: int, db: Database):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+
+@router.post("/auth/login")
+async def login(
+    db: Database,
+    username: str = Form(...),
+    password: str = Form(...),
+):
+    user = get_user_by_username(db, username)
+    if not user or not password_matches_hashed(password, user.password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
+        )
+
+    access_token = create_token(
+        data={"sub": str(user.id)}, expires_delta=timedelta(days=7)
+    )
+
+    return {"token": access_token, "user": UserResponse.from_orm(user)}
+
+
+@router.post("/auth/register")
+async def register(
+    db: Database,
+    username: str = Form(...),
+    password: str = Form(...),
+):
+    hashed_password = get_hash(password)
+    try:
+        user = create_user(db, username=username, password=hashed_password)
+        access_token = create_token(
+            data={"sub": str(user.id)}, expires_delta=timedelta(days=7)
+        )
+        return {"token": access_token, "user": UserResponse.from_orm(user)}
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
