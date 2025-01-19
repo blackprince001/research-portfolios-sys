@@ -9,9 +9,7 @@ from app.dependencies.database import Database
 
 from app.models.users import User
 
-reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl="/auth/login"
-)
+reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 def get_authenticated_user(db: Database, token: str = Depends(reusable_oauth2)) -> User:

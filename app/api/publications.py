@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.dependencies.database import Database
 from app.dependencies.auth import AuthenticatedUser
 from app.crud import publications as crud
-from app.schema.publications import PublicationCreate, PublicationResponse
+from app.schema.publications import PublicationCreate, PublicationResponse, PublicationsResponse
 
 router = APIRouter(prefix="/publications", tags=["publications"])
 
@@ -20,6 +20,19 @@ def create_publication(
 @router.get("/user/{user_id}", response_model=list[PublicationResponse])
 def get_user_publications(user_id: int, db: Database):
     return crud.get_user_publications(db, user_id)
+
+
+@router.get("/", response_model=list[PublicationsResponse])
+def get_publications(db: Database):
+    return crud.get_publications(db)
+
+
+@router.get("/{pub_id}", response_model=PublicationsResponse)
+def get_publication(
+    pub_id: int,
+    db: Database,
+):
+    return crud.get_publication(db, pub_id)
 
 
 @router.put("/{pub_id}", response_model=PublicationResponse)

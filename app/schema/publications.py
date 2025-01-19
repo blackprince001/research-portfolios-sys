@@ -24,3 +24,8 @@ class PublicationResponse(PublicationBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
     user_id: int
+
+
+class PublicationsResponse(PublicationBase):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
