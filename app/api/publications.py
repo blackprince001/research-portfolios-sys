@@ -32,6 +32,11 @@ def get_publications(db: Database):
     return crud.get_publications(db)
 
 
+@router.get("/org", response_model=list[PublicationsResponse])
+def get_org_publications(db: Database):
+    return crud.get_org_publications(db)
+
+
 @router.get("/{pub_id}", response_model=PublicationsResponse)
 def get_publication(
     pub_id: int,

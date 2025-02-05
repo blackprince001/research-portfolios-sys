@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy import Boolean, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.core import Base
@@ -15,6 +15,8 @@ class Publication(Base):
     publication_type: Mapped[str] = mapped_column(String, nullable=False)
     journal: Mapped[str | None] = mapped_column(String, nullable=True)
     conference: Mapped[str | None] = mapped_column(String, nullable=True)
+    is_org: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    poster: Mapped[str | None] = mapped_column(String, nullable=True)
     year: Mapped[int] = mapped_column(Integer, nullable=False)
     doi: Mapped[str | None] = mapped_column(String, nullable=True)
     url: Mapped[str | None] = mapped_column(String, nullable=True)

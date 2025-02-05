@@ -6,6 +6,8 @@ from sqlalchemy import engine_from_config, pool
 from alembic import context
 from app.database.core import Base
 from app.models.profiles import Profile  # noqa: F401
+from app.models.publications import Publication  # noqa: F401
+from app.models.teaching import Course, Teaching  # noqa: F401
 from app.models.users import User  # noqa: F401
 
 # this is the Alembic Config object, which provides

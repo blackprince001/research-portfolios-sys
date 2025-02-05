@@ -16,8 +16,12 @@ def get_user_publications(db: Session, user_id: int) -> list[Publication]:
     return db.query(Publication).filter(Publication.user_id == user_id).all()
 
 
-def get_publications(db: Session) -> Publication | None:
+def get_publications(db: Session) -> list[Publication] | None:
     return db.query(Publication).all()
+
+
+def get_org_publications(db: Session) -> list[Publication] | None:
+    return db.query(Publication).filter(Publication.is_org == True).all()
 
 
 def get_publication(db: Session, pub_id: int) -> Publication | None:

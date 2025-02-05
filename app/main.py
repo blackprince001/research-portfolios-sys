@@ -1,18 +1,19 @@
-from contextlib import asynccontextmanager
+# from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import profiles, publications, teaching, users
-from app.database.core import Base, engine
+
+# from app.database.core import Base, engine
 
 
-@asynccontextmanager
-async def lifespan(_: FastAPI):
-    Base.metadata.drop_all(engine)
-    Base.metadata.create_all(engine)
+# @asynccontextmanager
+# async def lifespan(_: FastAPI):
+#     Base.metadata.drop_all(engine)
+#     Base.metadata.create_all(engine)
 
-    yield
+#     yield
 
 
 app = FastAPI()
