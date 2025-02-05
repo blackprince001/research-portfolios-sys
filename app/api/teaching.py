@@ -1,13 +1,14 @@
 # app/api/teaching.py
-from fastapi import APIRouter, Depends, HTTPException
-from app.dependencies.database import Database
-from app.dependencies.auth import AuthenticatedUser
+from fastapi import APIRouter, HTTPException
+
 from app.crud import teaching as crud
+from app.dependencies.auth import AuthenticatedUser
+from app.dependencies.database import Database
 from app.schema.teaching import (
-    TeachingCreate,
-    TeachingResponse,
     CourseCreate,
     CourseResponse,
+    TeachingCreate,
+    TeachingResponse,
 )
 
 router = APIRouter(prefix="/teaching", tags=["teaching"])
@@ -30,7 +31,7 @@ def get_user_teaching_experiences(user_id: int, db: Database):
 @router.get("/{teaching_id}", response_model=TeachingResponse)
 def get_teaching_experience(teaching_id: int, db: Database):
     db_teaching = crud.get_teaching(db, teaching_id)
-    if not db_teaching or db_teaching.user_id != current_user.id:
+    if not db_teaching:
         raise HTTPException(status_code=403, detail="Not authorized")
     return db_teaching
 
@@ -59,10 +60,8 @@ def delete_teaching_experience(
     return {"message": "Teaching experience deleted successfully"}
 
 
-# Course-specific endpoints
 @router.post("/courses/", response_model=CourseResponse)
 def create_course(course: CourseCreate, db: Database, current_user: AuthenticatedUser):
-    # Verify the teaching experience belongs to the current user
     teaching = crud.get_teaching(db, course.teaching_id)
     if not teaching or teaching.user_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized")
@@ -72,7 +71,7 @@ def create_course(course: CourseCreate, db: Database, current_user: Authenticate
 @router.get("/courses/{teaching_id}", response_model=list[CourseResponse])
 def get_teaching_courses(teaching_id: int, db: Database):
     teaching = crud.get_teaching(db, teaching_id)
-    if not teaching or teaching.user_id != current_user.id:
+    if not teaching:
         raise HTTPException(status_code=403, detail="Not authorized")
     return crud.get_teaching_courses(db, teaching_id)
 

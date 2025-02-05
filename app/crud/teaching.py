@@ -1,7 +1,7 @@
-# app/crud/teaching.py
 from sqlalchemy.orm import Session
-from app.models.teaching import Teaching, Course
-from app.schema.teaching import TeachingCreate, CourseCreate
+
+from app.models.teaching import Course, Teaching
+from app.schema.teaching import CourseCreate, TeachingCreate
 
 
 def create_teaching(db: Session, teaching: TeachingCreate) -> Teaching:
@@ -10,7 +10,6 @@ def create_teaching(db: Session, teaching: TeachingCreate) -> Teaching:
     db.commit()
     db.refresh(db_teaching)
 
-    # Add associated courses if provided
     if teaching.courses:
         for course in teaching.courses:
             db_course = Course(teaching_id=db_teaching.id, **course.dict())
@@ -58,14 +57,12 @@ def update_teaching(
 def delete_teaching(db: Session, teaching_id: int) -> bool:
     db_teaching = get_teaching(db, teaching_id)
     if db_teaching:
-        # This will cascade delete associated courses
         db.delete(db_teaching)
         db.commit()
         return True
     return False
 
 
-# Course-specific CRUD operations
 def create_course(db: Session, course: CourseCreate) -> Course:
     db_course = Course(**course.dict())
     db.add(db_course)

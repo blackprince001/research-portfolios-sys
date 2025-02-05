@@ -1,9 +1,14 @@
 # app/api/publications.py
-from fastapi import APIRouter, Depends, HTTPException
-from app.dependencies.database import Database
-from app.dependencies.auth import AuthenticatedUser
+from fastapi import APIRouter, HTTPException
+
 from app.crud import publications as crud
-from app.schema.publications import PublicationCreate, PublicationResponse, PublicationsResponse
+from app.dependencies.auth import AuthenticatedUser
+from app.dependencies.database import Database
+from app.schema.publications import (
+    PublicationCreate,
+    PublicationResponse,
+    PublicationsResponse,
+)
 
 router = APIRouter(prefix="/publications", tags=["publications"])
 

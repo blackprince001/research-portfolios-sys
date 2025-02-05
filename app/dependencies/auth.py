@@ -1,12 +1,11 @@
 from typing import Annotated
 
 from fastapi import Depends, status
-from fastapi.security import OAuth2PasswordBearer
 from fastapi.exceptions import HTTPException
+from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 
 from app.dependencies.database import Database
-
 from app.models.users import User
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/login")
