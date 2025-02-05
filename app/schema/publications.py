@@ -12,6 +12,8 @@ class PublicationBase(BaseModel):
     conference: Optional[str] = None
     year: int
     doi: Optional[str] = None
+    is_org: bool = False
+    poster: Optional[str] = None
     url: Optional[str] = None
     pdf_link: Optional[str] = None
 
