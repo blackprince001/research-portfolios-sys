@@ -5,6 +5,12 @@ from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 from app.database.core import Base
+from app.models.organization import (  # noqa: F401
+    OrganizationCareer,
+    OrganizationCenter,
+    OrganizationContact,
+    OrganizationPartner,
+)
 from app.models.profiles import Profile  # noqa: F401
 from app.models.publications import Publication  # noqa: F401
 from app.models.teaching import Course, Teaching  # noqa: F401
