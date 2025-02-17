@@ -17,6 +17,7 @@ class Publication(Base):
     conference: Mapped[str | None] = mapped_column(String, nullable=True)
     is_org: Mapped[bool] = mapped_column(Boolean, nullable=False)
     poster: Mapped[str | None] = mapped_column(String, nullable=True)
+    paper_summary: Mapped[str | None] = mapped_column(String, nullable=True)
     year: Mapped[int] = mapped_column(Integer, nullable=False)
     doi: Mapped[str | None] = mapped_column(String, nullable=True)
     url: Mapped[str | None] = mapped_column(String, nullable=True)
