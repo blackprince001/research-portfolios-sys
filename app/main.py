@@ -1,20 +1,7 @@
-# from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import profiles, publications, teaching, users
-
-# from app.database.core import Base, engine
-
-
-# @asynccontextmanager
-# async def lifespan(_: FastAPI):
-#     Base.metadata.drop_all(engine)
-#     Base.metadata.create_all(engine)
-
-#     yield
-
+from app.api import organization, profiles, publications, teaching, users
 
 app = FastAPI()
 
@@ -30,6 +17,7 @@ app.include_router(users.router)
 app.include_router(profiles.router)
 app.include_router(teaching.router)
 app.include_router(publications.router)
+app.include_router(organization.router)
 
 
 @app.get("/ping")

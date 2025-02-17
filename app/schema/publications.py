@@ -14,6 +14,7 @@ class PublicationBase(BaseModel):
     doi: Optional[str] = None
     is_org: bool = False
     poster: Optional[str] = None
+    paper_summary: Optional[str] = None
     url: Optional[str] = None
     pdf_link: Optional[str] = None
 

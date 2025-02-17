@@ -7,6 +7,8 @@ class ProfileCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     user_id: int
+    name: str
+    org_role: str
     home_content: Optional[List[str]] = None
     projects: Optional[List[Dict[str, str]]] = None
     teachings: Optional[List[str]] = None
@@ -18,6 +20,8 @@ class ProfileRead(BaseModel):
 
     id: int
     user_id: int
+    name: str
+    org_role: str
     home_content: Optional[List[str]] = None
     projects: Optional[List[Dict[str, str]]] = None
     teachings: Optional[List[str]] = None
