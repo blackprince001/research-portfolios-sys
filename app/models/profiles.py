@@ -10,6 +10,7 @@ class Profile(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
     org_role: Mapped[str] = mapped_column(String, nullable=False)
+    profile_image: Mapped[str] = mapped_column(String, nullable=True)
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id"), nullable=False, unique=True
     )
