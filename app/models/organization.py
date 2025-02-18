@@ -30,13 +30,3 @@ class OrganizationCareer(Base):
     description: Mapped[str] = mapped_column(Text, nullable=False)
     type: Mapped[str] = mapped_column(String, nullable=False)
     is_closed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-
-
-class OrganizationContact(Base):
-    __tablename__ = "organization_contacts"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str] = mapped_column(String, nullable=False)
-    description: Mapped[str] = mapped_column(Text, nullable=False)
-    type: Mapped[str] = mapped_column(String, nullable=False)
-    is_closed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)

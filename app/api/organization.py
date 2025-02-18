@@ -4,23 +4,18 @@ from fastapi import APIRouter, HTTPException
 from app.crud.organization import (
     create_organization_career,
     create_organization_center,
-    create_organization_contact,
     create_organization_partner,
     delete_organization_career,
     delete_organization_center,
-    delete_organization_contact,
     delete_organization_partner,
     get_organization_career,
     get_organization_careers,
     get_organization_center,
     get_organization_centers,
-    get_organization_contact,
-    get_organization_contacts,
     get_organization_partner,
     get_organization_partners,
     update_organization_career,
     update_organization_center,
-    update_organization_contact,
     update_organization_partner,
 )
 from app.dependencies.auth import AuthenticatedUser
@@ -30,8 +25,6 @@ from app.schema.organization import (
     OrganizationCareerResponse,
     OrganizationCenterCreate,
     OrganizationCenterResponse,
-    OrganizationContactCreate,
-    OrganizationContactResponse,
     OrganizationPartnerCreate,
     OrganizationPartnerResponse,
 )
@@ -190,54 +183,3 @@ def delete_career(career_id: int, db: Database, current_user: AuthenticatedUser)
         raise HTTPException(status_code=404, detail="Career not found")
     delete_organization_career(db, career_id)
     return {"message": "Career deleted successfully"}
-
-
-# OrganizationContact Routes
-@router.post("/contacts/", response_model=OrganizationContactResponse)
-def create_contact(
-    contact: OrganizationContactCreate,
-    db: Database,
-    current_user: AuthenticatedUser,
-):
-    if not current_user:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    return create_organization_contact(db, contact)
-
-
-@router.get("/contacts/", response_model=list[OrganizationContactResponse])
-def get_contacts(db: Database):
-    return get_organization_contacts(db)
-
-
-@router.get("/contacts/{contact_id}", response_model=OrganizationContactResponse)
-def get_contact(contact_id: int, db: Database):
-    db_contact = get_organization_contact(db, contact_id)
-    if not db_contact:
-        raise HTTPException(status_code=404, detail="Contact not found")
-    return db_contact
-
-
-@router.put("/contacts/{contact_id}", response_model=OrganizationContactResponse)
-def update_contact(
-    contact_id: int,
-    contact: OrganizationContactCreate,
-    db: Database,
-    current_user: AuthenticatedUser,
-):
-    if not current_user:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    db_contact = get_organization_contact(db, contact_id)
-    if not db_contact:
-        raise HTTPException(status_code=404, detail="Contact not found")
-    return update_organization_contact(db, contact_id, contact)
-
-
-@router.delete("/contacts/{contact_id}")
-def delete_contact(contact_id: int, db: Database, current_user: AuthenticatedUser):
-    if not current_user:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    db_contact = get_organization_contact(db, contact_id)
-    if not db_contact:
-        raise HTTPException(status_code=404, detail="Contact not found")
-    delete_organization_contact(db, contact_id)
-    return {"message": "Contact deleted successfully"}

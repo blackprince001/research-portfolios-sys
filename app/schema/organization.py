@@ -49,20 +49,3 @@ class OrganizationCareerCreate(OrganizationCareerBase):
 class OrganizationCareerResponse(OrganizationCareerBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-
-
-# OrganizationContact Schemas
-class OrganizationContactBase(BaseModel):
-    title: str
-    description: str
-    type: str
-    is_closed: bool = False
-
-
-class OrganizationContactCreate(OrganizationContactBase):
-    model_config = ConfigDict(from_attributes=True)
-
-
-class OrganizationContactResponse(OrganizationContactBase):
-    model_config = ConfigDict(from_attributes=True)
-    id: int
