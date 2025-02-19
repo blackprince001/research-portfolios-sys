@@ -25,13 +25,13 @@ mdurl==0.1.2
 naked==0.1.32
 passlib==1.7.4
 psycopg2-binary==2.9.10
-pyasn1==0.6.1
+pyasn1==0.4.8
 pydantic==2.9.1
 pydantic-core==2.23.3
 pygments==2.18.0
 pyjwt==2.10.1
 python-dotenv==1.0.1
-python-jose==3.3.0
+python-jose==3.4.0
 python-multipart==0.0.18
 pyyaml==6.0.2
 requests==2.32.3
