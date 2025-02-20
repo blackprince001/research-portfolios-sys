@@ -24,6 +24,7 @@ class ProfileRead(BaseModel):
     name: str
     org_role: str
     home_content: Optional[List[str]] = None
+    profile_image: Optional[str] = None
     projects: Optional[List[Dict[str, str]]] = None
     teachings: Optional[List[str]] = None
     cv_link: Optional[str] = None
