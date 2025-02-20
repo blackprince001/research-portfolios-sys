@@ -8,6 +8,10 @@ def get_profile_by_user_id(db: Session, user_id: int):
     return db.query(Profile).filter(Profile.user_id == user_id).first()
 
 
+def get_profiles(db: Session):
+    return db.query(Profile).all()
+
+
 def create_profile(db: Session, profile: ProfileCreate):
     db_profile = Profile(**profile.dict())
     db.add(db_profile)

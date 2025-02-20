@@ -4,6 +4,7 @@ from app.crud.profiles import (
     create_profile,
     delete_profile,
     get_profile_by_user_id,
+    get_profiles,
     update_profile,
 )
 from app.dependencies.auth import AuthenticatedUser
@@ -23,12 +24,18 @@ def create_new_profile(
     return db_profile
 
 
-@router.get("/profiles/{user_id}", response_model=ProfileRead)
+@router.get("/profile/{user_id}", response_model=ProfileRead)
 def read_profile(user_id: int, db: Database):
     db_profile = get_profile_by_user_id(db, user_id)
     if db_profile is None:
         raise HTTPException(status_code=404, detail="Profile not found")
     return db_profile
+
+
+@router.get("/profiles/", response_model=list[ProfileRead])
+def read_profiles(db: Database):
+    db_profiles = get_profiles(db)
+    return db_profiles
 
 
 @router.put("/profiles/{profile_id}", response_model=ProfileRead)
